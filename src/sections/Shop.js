@@ -190,7 +190,7 @@ const Shop = () => {
         ease: "none,",
       });
       ScrollTrigger.refresh();
-    }, 1000);
+    }, 5000);
 
     return () => {
       // Let's clear instances
