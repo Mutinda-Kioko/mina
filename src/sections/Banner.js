@@ -30,7 +30,7 @@ const Container = styled.div`
 `;
 
 const BannerComponent = styled.h1`
-  font-size: ${(props) => props.theme.fontxxxl};
+  font-size: ${(props) => props.theme.fontxxl};
   font-family: "Kaushan Script";
   color: ${(props) => props.theme.text};
   white-space: nowrap;

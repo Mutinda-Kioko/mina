@@ -55,8 +55,7 @@ const Title = styled.h1`
   }
 `;
 const Right = styled.div`
-  left:5%;
-  padding-left: 30%;
+  padding-left: 3%;
   min-height: 100vh;
   background-color: ${(props) => props.theme.grey};
   display: flex;
@@ -218,7 +217,7 @@ const Shop = () => {
     <Container>
        {scrollX !== 0 && (
     <Icon
-    onClick={() => slide(-500)}
+    onClick={() => slide(-300)}
 
     >
     <FiChevronLeft size={40} color={"#879a83"}/>
@@ -238,7 +237,7 @@ const Shop = () => {
     </Section>
     {!scrolEnd && (
       <Icon
-      onClick={() => slide(+500)}
+      onClick={() => slide(+300)}
       >
           <FiChevronRight color="#879a83" size={40}/>
       </Icon>)}

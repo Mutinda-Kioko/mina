@@ -87,6 +87,13 @@ const Text = styled.div`
 `;
 const Container = styled.div`
   position: absolute;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+ }
   top: 0%;
   left: 50%;
   transform: translate(-50%, 0);
@@ -174,14 +181,16 @@ const NewArrival = () => {
             end: "bottom top",
             scroller: ".App", // locomotive element
             scrub: true,
+            pin: true,
 
             //   markers:true,
           },
           // we have to increase scrolling height of this section same as the scrolling element width
+         
         }
       );
       ScrollTrigger.refresh();
-    }, 1000);
+    }, 5000);
 
     return () => {
       // Let's clear instances
@@ -189,6 +198,8 @@ const NewArrival = () => {
       ScrollTrigger.kill();
     };
   }, []);
+
+  const rndInt = Math.floor(Math.random() * 3) + 1
 
   return (
     <Section ref={ref} id="new-arrival">
@@ -201,14 +212,11 @@ const NewArrival = () => {
         New Arrivals
       </Title>
 
-      <Container ref={ScrollingRef}>
-        <Product img={img1} title="" />
-        <Product img={img2} title="" />
-        <Product img={img3} title="" />
-        <Product img={img4} title="" />
+      <Container>
+      {rndInt === 3 ?  <Product img={img3} title="" />: rndInt === 2 ?  <Product img={img2} title="" />:  <Product img={img4} title="" /> }
       </Container>
 
-      <Text data-scroll data-scroll-speed="-4">
+      <Text data-scroll data-scroll-speed="-3">
         All collections are  available for cool clothes in all sizes. These
         collection are a great way to find a new look for you. They offer a
         variety of cool apparel styles to fit your taste.

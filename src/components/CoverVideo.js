@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import LogoImg from '../assets/Images/LogoImg.webp';
-import Video3 from "../assets/3.mp4"
-import Video5 from "../assets/5.mp4";
-
+import Video3 from "../assets/1.mp4"
 const VideoContainer = styled.section`
   width: 100%;
   height: 100vh;
@@ -97,7 +95,6 @@ const item = {
   },
 };
 const CoverVideo = () => {
-  const rndInt = Math.floor(Math.random() * 6) + 1
   return (
     <VideoContainer>
       <DarkOverlay />
@@ -121,7 +118,7 @@ const CoverVideo = () => {
         Modest wardrobe essentials/ Hijabi 🧕🏾/ Abayas & dresses ✨
         </motion.h2>
       </Title>
-      <video src={rndInt === 3 ? Video3: Video5} type="video/mp4" autoPlay muted loop />
+      <video src={Video3} type="video/mp4" autoPlay muted loop />
     </VideoContainer>
   );
 };
