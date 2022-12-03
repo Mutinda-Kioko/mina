@@ -2,9 +2,10 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import React, { useLayoutEffect } from "react";
 import styled from "styled-components";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; 
+import {FiChevronLeft,  FiChevronRight} from 'react-icons/fi'
 
 import img1 from "../assets/Images/1.webp";
 import img2 from "../assets/Images/2.webp";
@@ -12,22 +13,31 @@ import img3 from "../assets/Images/3.webp";
 import img5 from "../assets/Images/5.webp";
 import img6 from "../assets/Images/6.webp";
 import PreOrderButton from "../components/PreOrderButton";
-
 const Section = styled.section`
   min-height: 100vh;
   height: auto;
-  width: 100vw;
-  margin: 0 auto;
-  overflow: hidden;
-
+  overflow-x: scroll;
+  scroll-behavior: smooth;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-
   position: relative;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+ }
+
 `;
+const Container = styled.div `
+display: flex;
+align-items: center;
+position:relative;
+background-color: ${(props) => props.theme.grey};
+
+`
 const Title = styled.h1`
-  font-size: ${(props) => props.theme.fontxxxl};
+  font-size: ${(props) => props.theme.fontxxl};
   font-family: "Kaushan Script";
   font-weight: 300;
   text-shadow: 1px 1px 1px ${(props) => props.theme.body};
@@ -44,69 +54,23 @@ const Title = styled.h1`
     font-size: ${(props) => props.theme.fontxl};
   }
 `;
-
-const Left = styled.div`
-  width: 35%;
-  background-color: ${(props) => props.theme.body};
-  color: ${(props) => props.theme.text};
-
-  min-height: 100vh;
-  z-index: 5;
-
-  position: fixed;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  p {
-    font-size: ${(props) => props.theme.fontlg};
-    font-weight: 300;
-    width: 80%;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 64em) {
-    p {
-      font-size: ${(props) => props.theme.fontmd};
-    }
-  }
-
-  @media (max-width: 48em) {
-    width: 40%;
-    p {
-      font-size: ${(props) => props.theme.fontsm};
-    }
-  }
-
-  @media (max-width: 30em) {
-    p {
-      font-size: ${(props) => props.theme.fontxs};
-    }
-  }
-`;
 const Right = styled.div`
-  position: absolute;
-  left: 35%;
+  left:5%;
   padding-left: 30%;
   min-height: 100vh;
-
   background-color: ${(props) => props.theme.grey};
-  /* width: 65%; */
   display: flex;
   justify-content: flex-start;
   align-items: center;
 
   h1 {
     width: 5rem;
-    margin: 0 2rem;
+    margin: 0 1rem;
   }
 `;
-
 const Item = styled(motion.div)`
   width: 20rem;
-  margin-right: 6rem;
-
+  margin-right: 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -139,16 +103,67 @@ const Product = ({ img, title = "" }) => {
     >
       <img src={img} alt={title} />
       <h1>{title}</h1>
-      <PreOrderButton text = {`Hello, I am interested in your ${title} collection. What other colors are there?`} />
+      <PreOrderButton text = {`Hello, I am interested in your ${title} collection. Lets talk.`} />
     </Item>
   );
 };
-
+const Icon = styled.button`
+width: 40px;
+height: 40px;
+border-radius:20px;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: ${(props) => props.theme.white};
+border-color: #879a83;
+&:hover {
+  background-color: ${(props) => props.theme.grey};
+}
+z-index: 1;
+`
 const Shop = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   const ref = useRef(null);
   const horizontalRef = useRef(null);
+  let scrl = useRef(null);
+  const [scrollX, setscrollX] = useState(0);
+  const [scrolEnd, setscrolEnd] = useState(false);
+  const slide = (shift) => {
+    scrl.current.scrollLeft += shift;
+    setscrollX(scrollX + shift);
+
+    if (
+      Math.floor(scrl.current.scrollWidth - scrl.current.scrollLeft) <=
+      scrl.current.offsetWidth
+    ) {
+      setscrolEnd(true);
+    } else {
+      setscrolEnd(false);
+    }
+  };
+
+  //Anim
+  const anim = (e) => {
+    gsap.from(e.target, { scale: 1 });
+    gsap.to(e.target, { scale: 1.5 });
+  };
+  const anim2 = (e) => {
+    gsap.from(e.target, { scale: 1.5 });
+    gsap.to(e.target, { scale: 1 });
+  };
+
+  const scrollCheck = () => {
+    setscrollX(scrl.current.scrollLeft);
+    if (
+      Math.floor(scrl.current.scrollWidth - scrl.current.scrollLeft) <=
+      scrl.current.offsetWidth
+    ) {
+      setscrolEnd(true);
+    } else {
+      setscrolEnd(false);
+    }
+  };
 
   useLayoutEffect(() => {
     let element = ref.current;
@@ -200,7 +215,16 @@ const Shop = () => {
   }, []);
 
   return (
-    <Section ref={ref} id="shop">
+    <Container>
+       {scrollX !== 0 && (
+    <Icon
+    onClick={() => slide(-500)}
+
+    >
+    <FiChevronLeft size={40} color={"#879a83"}/>
+    </Icon>
+       )}
+    <Section ref={scrl} onScroll={scrollCheck} id="shop">
       <Title data-scroll data-scroll-speed="-1">
         Collections
       </Title>
@@ -212,6 +236,13 @@ const Shop = () => {
         <Product img={img6} title="Colored abayas" />
       </Right>
     </Section>
+    {!scrolEnd && (
+      <Icon
+      onClick={() => slide(+500)}
+      >
+          <FiChevronRight color="#879a83" size={40}/>
+      </Icon>)}
+    </Container>
   );
 };
 

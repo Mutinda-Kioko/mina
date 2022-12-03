@@ -1,5 +1,5 @@
 {
-  "name": "wibe-test",
+  "name": "mina",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,6 +13,7 @@
     "locomotive-scroll": "^4.1.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.7.1",
     "react-locomotive-scroll": "^0.2.0",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
